@@ -61,24 +61,28 @@ const password = sha256(process.env.PASSWORD).toString();
   }
 
   const reportData = resp.body.data;
-  const temperature = (Math.random() * 0.6 + 36).toFixed(1).toString();
+  const temperature = '36.4';
+  delete reportData.id;
   reportData.temperature = temperature;
-  reportData.temperatureTwo = temperature;
+  //reportData.temperatureTwo = temperature;
   reportData.isTrip = 0;
   reportData.mobile = body.data.mobile;
   reportData.reportDate = dayjs().format('YYYY-MM-DD');
+  reportData.tripList = [];
+  reportData.peerList = [];
+
   // 上报
   console.log(reportData);
 
   // Nothing....
-  // const res = await got.post(API.REPORT, {
-  //   json: reportData,
-  //   headers,
-  //   responseType: 'json',
-  // });
-  // console.log(res.body);
+  const res = await got.post(API.REPORT, {
+    json: reportData,
+    headers,
+    responseType: 'json',
+  });
+  console.log(res.body);
 
-  // if (res.body.success) {
-  //   console.log('上报成功，今日体温：' + temperature);
-  // }
+  if (res.body.success) {
+    console.log('上报成功，今日体温：' + temperature);
+  }
 })();
