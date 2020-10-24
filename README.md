@@ -12,7 +12,7 @@
 融入到一个命令行中
 
 ```bash
-node cli.js -c B11011111 -p 123456 -t 36.5
+node index.js -c B11011111 -p 123456 -t 36.5
 ```
 
 ## Feature
@@ -25,5 +25,5 @@ node cli.js -c B11011111 -p 123456 -t 36.5
 ```bash
 npm install
 
-node cli.js -c <yourcardNo> -p <yourpassword> -t <temperature>
+node index.js -c <yourcardNo> -p <yourpassword> -t <temperature>
 ```
