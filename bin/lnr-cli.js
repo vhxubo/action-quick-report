@@ -11,7 +11,6 @@ program
   .alias('r')
   .description('洛阳理工学院健康上报 CLI')
   .action((cardNo, cmdObj) => {
-    console.log(cardNo, cmdObj.password, cmdObj.temperature);
     Report(cardNo, cmdObj.password, cmdObj.temperature).then((res) =>
       console.log(res)
     );
