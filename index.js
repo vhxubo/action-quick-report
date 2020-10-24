@@ -20,6 +20,7 @@ const headers = {
 };
 
 async function Report(cardNo, password, temperature) {
+  if (temperature < 36.0 || temperature > 37.0) return '温度（36.0-37.0）';
   // 登录
   const { body } = await got.post(API.LOGIN, {
     headers,
