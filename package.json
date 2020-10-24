@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "report": "node index.js",
-    "cli": "node cli.js"
+    "test": "node test.js"
   },
   "author": "vhxubo",
   "license": "ISC",
