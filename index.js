@@ -2,8 +2,7 @@ const { program } = require('commander');
 const { Report } = require('./utils');
 
 program
-  .version('0.1.0')
-  .command('report')
+  .version('0.0.1')
   .requiredOption('-c, --cardNo <string>', 'cardNo is required')
   .requiredOption('-p, --password <string>', 'password is required')
   .requiredOption('-t,--temperature <float>', 'temperature is required');
