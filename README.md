@@ -12,7 +12,7 @@
 融入到一个命令行中
 
 ```bash
-node index.js -c B11011111 -p 123456 -t 36.5
+npx github:vhxubo/lit-ncov-report-cli r <yourcardNo> -p <yourpassword> -t <temperature>
 ```
 
 ## Feature
@@ -23,7 +23,13 @@ node index.js -c B11011111 -p 123456 -t 36.5
 ## Get Start
 
 ```bash
+git clone https://github.com/vhxubo/lit-ncov-report-cli.git
+
+cd /lit-ncov-report-cli
+
 npm install
 
-node index.js -c <yourcardNo> -p <yourpassword> -t <temperature>
+npm link
+
+lnr-cli report <yourcardNo> -p <yourpassword> -t <temperature>
 ```
