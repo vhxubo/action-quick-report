@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "report": "node index.js"
+    "report": "node index.js",
+    "cli": "node cli.js"
   },
   "author": "vhxubo",
   "license": "ISC",
   "dependencies": {
+    "commander": "^6.1.0",
     "crypto-js": "^4.0.0",
     "dayjs": "^1.9.4",
     "dotenv": "^8.2.0",

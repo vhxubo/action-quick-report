@@ -1,3 +1,4 @@
+require('dotenv').config();
 const got = require('got');
 const sha256 = require('crypto-js/sha256');
 const dayjs = require('dayjs');
@@ -19,13 +20,16 @@ const headers = {
   'Accept-Encoding': 'gzip, deflate',
 };
 
-async function Report(cardNo, password, temperature) {
+const cardNo = process.env.CARDNO;
+const password = sha256(process.env.PASSWORD).toString();
+
+(async () => {
   // 登录
   const { body } = await got.post(API.LOGIN, {
     headers,
     json: {
       cardNo: cardNo,
-      password: sha256(password).toString(),
+      password: password,
     },
     responseType: 'json',
   });
@@ -33,8 +37,7 @@ async function Report(cardNo, password, temperature) {
   if (body.success) {
     console.log('登录成功');
   } else {
-    //console.log('登录失败');
-    return '登录失败';
+    console.log('登录失败');
   }
 
   const token = body.data.token;
@@ -53,11 +56,12 @@ async function Report(cardNo, password, temperature) {
     console.log('获取历史数据成功');
     console.log(resp.body);
   } else {
-    //console.log('获取历史数据失败');
-    return '获取历史数据失败';
+    console.log('获取历史数据失败');
+    return;
   }
 
   const reportData = resp.body.data;
+  const temperature = '36.4';
   delete reportData.id;
   reportData.temperature = temperature;
   reportData.isTrip = 0;
@@ -66,8 +70,8 @@ async function Report(cardNo, password, temperature) {
   reportData.tripList = [];
   reportData.peerList = [];
 
-  // 上报信息
-  //console.log(reportData);
+  // 上报
+  console.log(reportData);
 
   // Nothing....
   const res = await got.post(API.REPORT, {
@@ -78,12 +82,8 @@ async function Report(cardNo, password, temperature) {
   console.log(res.body);
 
   if (res.body.success) {
-    //console.log('上报成功，今日体温：' + temperature);
-    return '上报成功，今日体温：' + temperature;
+    console.log('上报成功，今日体温：' + temperature);
   } else {
-    //console.log('上报失败');
-    return '上报失败';
+    console.log('上报成功，今日体温：' + temperature);
   }
-}
-
-module.exports.Report = Report;
+})();
