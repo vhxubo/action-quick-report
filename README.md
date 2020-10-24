@@ -12,7 +12,7 @@
 融入到一个命令行中
 
 ```bash
-npx github:vhxubo/lit-ncov-report-cli r <yourcardNo> -p <yourpassword> -t <temperature>
+$ npx github:vhxubo/lit-ncov-report-cli r <yourcardNo> -p <yourpassword> -t <temperature>
 ```
 
 ## Feature
@@ -23,13 +23,13 @@ npx github:vhxubo/lit-ncov-report-cli r <yourcardNo> -p <yourpassword> -t <tempe
 ## Get Start
 
 ```bash
-git clone https://github.com/vhxubo/lit-ncov-report-cli.git
+$ git clone https://github.com/vhxubo/lit-ncov-report-cli.git
 
-cd /lit-ncov-report-cli
+$ cd /lit-ncov-report-cli
 
-npm install
+$ npm install
 
-npm link
+$ npm link
 
-lnr-cli report <yourcardNo> -p <yourpassword> -t <temperature>
+$ lnr-cli report <yourcardNo> -p <yourpassword> -t <temperature>
 ```
