@@ -14,7 +14,7 @@ const headers = {
   Accept: 'application/json, text/plain, */*',
   DNT: '1',
   'User-Agent':
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.122 Safari/537.36 Edg/81.0.416.64',
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.122 Safari/537.36 Edg/81.0.416.64',
   Referer: 'http://hmgr.sec.lit.edu.cn/web/',
   'Accept-Encoding': 'gzip, deflate'
 }
@@ -54,7 +54,7 @@ function isReported (oldData, today) {
 
   if (
     (temperature !== null || temperature !== '') &&
-    reportDate === today
+        reportDate === today
   ) { return true }
 
   return false
