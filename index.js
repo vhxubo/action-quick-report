@@ -1,6 +1,10 @@
 const got = require('got')
 const sha256 = require('crypto-js/sha256')
 const dayjs = require('dayjs')
+const utc = require('dayjs/plugin/utc') // dependent on utc plugin
+const timezone = require('dayjs/plugin/timezone')
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 const API = {
   LOGIN: 'http://hmgr.sec.lit.edu.cn/wms/healthyLogin',
@@ -14,7 +18,7 @@ const headers = {
   Accept: 'application/json, text/plain, */*',
   DNT: '1',
   'User-Agent':
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.122 Safari/537.36 Edg/81.0.416.64',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.122 Safari/537.36 Edg/81.0.416.64',
   Referer: 'http://hmgr.sec.lit.edu.cn/web/',
   'Accept-Encoding': 'gzip, deflate'
 }
@@ -54,7 +58,7 @@ function isReported (oldData, today) {
 
   if (
     (temperature !== null || temperature !== '') &&
-        reportDate === today
+    reportDate === today
   ) { return true }
 
   return false
@@ -76,14 +80,14 @@ function setReportData (oldData, mobile, temperature) {
 module.exports = async function report (cardNo, password, temperature) {
   if (temperature < 36.0 || temperature > 37.0) { return { success: false, msg: '体温错误' } }
 
-  const today = dayjs().format('YYYY-MM-DD')
-  const log = []
+  const today = dayjs().tz('Asia/ShangHai').format('YYYY-MM-DD')
+  console.log(today)
 
   // 登录
   const { body: loginBody } = await login(cardNo, password)
 
   if (loginBody.success) {
-    log.push('登录成功')
+    console.log('登录成功')
   } else {
     return { success: false, msg: '登录失败' }
   }
@@ -93,7 +97,7 @@ module.exports = async function report (cardNo, password, temperature) {
   const { body: oldBody } = await getHistory(loginBody.data)
 
   if (oldBody.success) {
-    log.push('获取历史数据成功')
+    console.log('获取历史数据成功')
   } else {
     return { success: false, msg: '获取历史数据失败' }
   }
@@ -107,7 +111,7 @@ module.exports = async function report (cardNo, password, temperature) {
   // 生成今日上报数据
   const reportData = setReportData(oldData, loginData.mobile, temperature)
 
-  log.push(JSON.stringify(reportData))
+  console.log(JSON.stringify(reportData))
 
   // 上报今日体温数据
   const { body: resultBody } = await got.post(API.REPORT, {
@@ -116,10 +120,10 @@ module.exports = async function report (cardNo, password, temperature) {
   })
 
   if (resultBody.success) {
-    log.push(`上报成功，今日体温: ${temperature}°C`)
+    console.log(`上报成功，今日体温: ${temperature}°C`)
   } else {
     return { success: false, msg: '上报失败' }
   }
 
-  return { success: true, msg: '今日上报已成功!', data: log.join(';\n') }
+  return { success: true, msg: '今日上报已成功!', desp: `今日体温: ${temperature}°C` }
 }
